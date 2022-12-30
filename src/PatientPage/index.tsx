@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Patient } from '../types';
 import { apiBaseUrl } from '../constants';
 import { useStateValue, updatePatient } from '../state';
+import EntryComponent from '../components/Entry';
 
 const PatientListPage = () => {
   const [{ patients }, dispatch] = useStateValue();
@@ -50,9 +51,11 @@ const PatientListPage = () => {
       <br />
       occupation: {patient?.occupation}
       <br />
-      entries:{' '}
+      <p>
+        <b>entries:</b>
+      </p>
       {patient?.entries?.map((e) => (
-        <p key={String(e)}>String(e)</p>
+        <EntryComponent key={e.id} entry={e} />
       ))}
     </div>
   );

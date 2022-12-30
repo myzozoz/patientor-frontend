@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Box, Table, Button, TableHead, Typography } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { PatientFormValues } from '../AddPatientModal/AddPatientForm';
 import AddPatientModal from '../AddPatientModal';
@@ -18,6 +18,7 @@ const PatientListPage = () => {
 
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string>();
+  const navigate = useNavigate();
 
   const openModal = (): void => setModalOpen(true);
 
@@ -47,6 +48,10 @@ const PatientListPage = () => {
     }
   };
 
+  const handleRowClick = (id: string) => {
+    navigate(`patients/${id}`);
+  };
+
   return (
     <div className='App'>
       <Box>
@@ -66,8 +71,8 @@ const PatientListPage = () => {
         <TableBody>
           {Object.values(patients).map((patient: Patient) => (
             <TableRow
-              component={Link}
-              to={`/patients/${patient.id}`}
+              onClick={() => handleRowClick(patient.id)}
+              style={{ cursor: 'pointer' }}
               key={patient.id}
             >
               <TableCell>{patient.name}</TableCell>
