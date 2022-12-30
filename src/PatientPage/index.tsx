@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { Patient } from '../types';
 import { apiBaseUrl } from '../constants';
-import { useStateValue } from '../state';
+import { useStateValue, updatePatient } from '../state';
 
 const PatientListPage = () => {
   const [{ patients }, dispatch] = useStateValue();
@@ -13,11 +13,11 @@ const PatientListPage = () => {
 
   useEffect(() => {
     const fetchPatient = async () => {
-      const response = await axios.get<Patient>(
+      const { data: updatedPatient } = await axios.get<Patient>(
         `${apiBaseUrl}/patients/${String(id)}`,
       );
-      dispatch({ type: 'UPDATE_PATIENT', payload: response.data });
-      setPatient(response.data);
+      dispatch(updatePatient(updatedPatient));
+      setPatient(updatedPatient);
     };
     try {
       const current_patient = id && patients[id];
