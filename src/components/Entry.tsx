@@ -1,15 +1,19 @@
 import { type Entry } from '../types';
+import { useStateValue } from '../state';
 
 const EntryComponent = ({ entry }: { entry: Entry }) => {
-  if (entry.diagnosisCodes) {
-    console.log(entry.diagnosisCodes);
-  }
+  const [{ diagnoses }] = useStateValue();
+
   return (
     <div>
       {entry.date}: {entry.description}
       <ul>
         {entry.diagnosisCodes?.map((dc) => {
-          return <li key={dc}>{dc}</li>;
+          return (
+            <li key={dc}>
+              {dc}: {diagnoses[dc]?.name}
+            </li>
+          );
         })}
       </ul>
     </div>

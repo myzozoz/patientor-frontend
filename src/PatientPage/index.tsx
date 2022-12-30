@@ -23,9 +23,7 @@ const PatientListPage = () => {
     try {
       const current_patient = id && patients[id];
       if (!current_patient || !current_patient.entries) {
-        fetchPatient().catch((e) => {
-          throw e;
-        });
+        void fetchPatient();
       } else {
         setPatient(current_patient);
       }
