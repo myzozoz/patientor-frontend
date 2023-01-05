@@ -38,7 +38,23 @@ const AddEntryForm = ({ onSubmit, onCancel }: Props) => {
       }}
       onSubmit={onSubmit}
       validate={(values) => {
-        console.log(values);
+        const requiredError = 'Field is required';
+        const errors: { [field: string]: string } = {};
+        if (!values.date) {
+          errors.date = requiredError;
+        }
+        if (!values.specialist) {
+          errors.specialist = requiredError;
+        }
+        if (!values.description) {
+          errors.description = requiredError;
+        }
+        if (
+          !hcrOptions.map((o) => o.value).includes(values.healthCheckRating)
+        ) {
+          errors.healthCheckRating = requiredError;
+        }
+        return errors;
       }}
     >
       {({ isValid, dirty, setFieldValue, setFieldTouched }) => {
